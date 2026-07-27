@@ -44,31 +44,43 @@
     <p class="hint" style="text-align:center;margin-top:1rem">Already registered? <a href="/portal/login.html" style="color:var(--navy);font-weight:600">Login</a></p>
   </div>
 </div></section>
-<script type="module">
-import { alertBox } from '/assets/app.js';
-import { register } from '/assets/portal.js';
-const pw = document.getElementById('password');
-const wrap = document.getElementById('pwWrap');
-function sync(){
-  const r = document.querySelector('input[name=role]:checked')?.value;
-  const t = r === 'Teacher'; pw.required = !!t; wrap.style.opacity = t ? '1' : '.55';
-}
-document.querySelectorAll('input[name=role]').forEach(el => el.addEventListener('change', sync)); sync();
-document.getElementById('regForm').addEventListener('submit', async (e)=>{
-  e.preventDefault();
-  const btn = document.getElementById('btn'); btn.disabled = true; btn.textContent = 'Registering…';
-  try {
-    const role = document.querySelector('input[name=role]:checked')?.value;
-    await register({ name: name.value, email: email.value, role, password: password.value });
-    alertBox(alert, 'ok', role + ' registered successfully. You can log in now.');
-    e.target.reset(); sync();
-  } catch (err) { alertBox(alert, 'bad', err.message || 'Failed'); }
-  btn.disabled = false; btn.textContent = 'Register';
+
+<script src="/assets/app.js" defer></script>
+<script src="/assets/portal.js" defer></script>
+<script defer>
+document.addEventListener('DOMContentLoaded', function () {
+  var pw = document.getElementById('password');
+  var wrap = document.getElementById('pwWrap');
+  function sync() {
+    var r = document.querySelector('input[name=role]:checked');
+    var t = r && r.value === 'Teacher';
+    pw.required = !!t;
+    wrap.style.opacity = t ? '1' : '.55';
+  }
+  document.querySelectorAll('input[name=role]').forEach(function (el) { el.addEventListener('change', sync); });
+  sync();
+  document.getElementById('regForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var btn = document.getElementById('btn');
+    btn.disabled = true; btn.textContent = 'Registering…';
+    var roleEl = document.querySelector('input[name=role]:checked');
+    var role = roleEl ? roleEl.value : '';
+    SkillariumPortal.register({
+      name: document.getElementById('name').value,
+      email: document.getElementById('email').value,
+      role: role,
+      password: document.getElementById('password').value
+    }).then(function () {
+      Skillarium.alertBox(document.getElementById('alert'), 'ok', role + ' registered successfully. You can log in now.');
+      e.target.reset(); sync();
+    }).catch(function (err) {
+      Skillarium.alertBox(document.getElementById('alert'), 'bad', (err && err.message) || 'Failed');
+    }).then(function () {
+      btn.disabled = false; btn.textContent = 'Register';
+    });
+  });
 });
 </script>
-<script type="module">
-import { boot } from '/assets/app.js';
-boot('portal');
-</script>
+<script defer>document.addEventListener('DOMContentLoaded',function(){ if(window.Skillarium) Skillarium.boot('portal'); });</script>
 </body>
 </html>

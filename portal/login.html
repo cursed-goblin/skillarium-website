@@ -44,26 +44,31 @@
     </div>
   </div>
 </div></section>
-<script type="module">
-import { alertBox } from '/assets/app.js';
-import { login, getSession } from '/assets/portal.js';
-if (getSession()) location.href = './dashboard.html';
-document.getElementById('loginForm').addEventListener('submit', async (e)=>{
-  e.preventDefault();
-  const btn = document.getElementById('btn'); btn.disabled = true; btn.textContent = 'Signing in…';
-  try {
-    const portal = document.querySelector('input[name=portal]:checked')?.value || 'teacher';
-    await login({ email: email.value, password: password.value, portal });
-    location.href = './dashboard.html';
-  } catch (err) {
-    alertBox(alert, 'bad', err.message || 'Login failed');
-    btn.disabled = false; btn.textContent = 'Login';
-  }
+
+<script src="/assets/app.js" defer></script>
+<script src="/assets/portal.js" defer></script>
+<script defer>
+document.addEventListener('DOMContentLoaded', function () {
+  if (SkillariumPortal.getSession()) { location.href = './dashboard.html'; return; }
+  document.getElementById('loginForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var btn = document.getElementById('btn');
+    btn.disabled = true; btn.textContent = 'Signing in…';
+    var portalEl = document.querySelector('input[name=portal]:checked');
+    var portal = portalEl ? portalEl.value : 'teacher';
+    SkillariumPortal.login({
+      email: document.getElementById('email').value,
+      password: document.getElementById('password').value,
+      portal: portal
+    }).then(function () {
+      location.href = './dashboard.html';
+    }).catch(function (err) {
+      Skillarium.alertBox(document.getElementById('alert'), 'bad', (err && err.message) || 'Login failed');
+      btn.disabled = false; btn.textContent = 'Login';
+    });
+  });
 });
 </script>
-<script type="module">
-import { boot } from '/assets/app.js';
-boot('portal');
-</script>
+<script defer>document.addEventListener('DOMContentLoaded',function(){ if(window.Skillarium) Skillarium.boot('portal'); });</script>
 </body>
 </html>

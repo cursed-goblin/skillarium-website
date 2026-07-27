@@ -38,40 +38,52 @@
     </div>
   </div>
 </div></section>
-<script type="module">
-import { requireAuth, logout, getDashboardData, nameById } from '/assets/portal.js';
-const user = requireAuth(['Admin','Teacher']);
-if (!user) throw new Error('auth');
-document.getElementById('welcome').textContent = `Welcome, ${user.name} (${user.role})`;
-document.getElementById('logout').onclick = logout;
-const data = getDashboardData();
-const esc = (v) => String(v ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const day = (d) => d ? new Date(d).toLocaleDateString('en-IN', {day:'numeric',month:'short',year:'numeric'}) : '—';
-document.getElementById('stats').innerHTML = `
-  <div class="card"><b>${data.teachers.length}</b><span class="hint">Teachers</span></div>
-  <div class="card"><b>${data.students.length}</b><span class="hint">Students</span></div>
-  <div class="card"><b>${data.logs.length}</b><span class="hint">Activity logs</span></div>
-  <div class="card"><b>${esc(user.role)}</b><span class="hint">Your role</span></div>`;
-if (user.role === 'Admin') {
-  document.getElementById('adminBlocks').innerHTML = `
-  <div class="form-card" style="margin-bottom:1rem" data-reveal>
-    <h2 style="font-size:1.3rem">Teachers</h2>
-    <div class="table-wrap"><table><thead><tr><th>ID</th><th>Name</th><th>Email</th><th>Registered</th></tr></thead>
-    <tbody>${data.teachers.length ? data.teachers.map(t=>`<tr><td>${t.teacher_id}</td><td>${esc(t.name)}</td><td>${esc(t.email)}</td><td>${day(t.created_at)}</td></tr>`).join('') : '<tr><td colspan=4 style="text-align:center;color:var(--muted)">No teachers yet.</td></tr>'}</tbody></table></div>
-  </div>
-  <div class="form-card" style="margin-bottom:1rem" data-reveal>
-    <h2 style="font-size:1.3rem">Students</h2>
-    <div class="table-wrap"><table><thead><tr><th>ID</th><th>Name</th><th>Email</th><th>Registered</th></tr></thead>
-    <tbody>${data.students.length ? data.students.map(s=>`<tr><td>${s.student_id}</td><td>${esc(s.name)}</td><td>${esc(s.email)}</td><td>${day(s.created_at)}</td></tr>`).join('') : '<tr><td colspan=4 style="text-align:center;color:var(--muted)">No students yet.</td></tr>'}</tbody></table></div>
-  </div>`;
-}
-document.getElementById('logsBody').innerHTML = data.logs.length
-  ? data.logs.map(l => `<tr><td>${l.log_id}</td><td>${esc(l.log_date)}</td><td>${esc(nameById(data.teachers,l.teacher_id,'teacher_id'))}</td><td>${esc(nameById(data.students,l.student_id,'student_id'))}</td><td>${esc(l.status)}</td></tr>`).join('')
-  : '<tr><td colspan=5 style="text-align:center;color:var(--muted)">No activity yet.</td></tr>';
+
+<script src="/assets/app.js" defer></script>
+<script src="/assets/portal.js" defer></script>
+<script defer>
+document.addEventListener('DOMContentLoaded', function () {
+  var user = SkillariumPortal.requireAuth(['Admin', 'Teacher']);
+  if (!user) return;
+  document.getElementById('welcome').textContent = 'Welcome, ' + user.name + ' (' + user.role + ')';
+  document.getElementById('logout').onclick = function () { SkillariumPortal.logout(); };
+  var data = SkillariumPortal.getDashboardData();
+  function esc(v) {
+    return String(v == null ? '' : v).replace(/[&<>"']/g, function (c) {
+      return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c];
+    });
+  }
+  function day(d) {
+    return d ? new Date(d).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }) : '—';
+  }
+  document.getElementById('stats').innerHTML =
+    '<div class="card"><b>' + data.teachers.length + '</b><span class="hint">Teachers</span></div>' +
+    '<div class="card"><b>' + data.students.length + '</b><span class="hint">Students</span></div>' +
+    '<div class="card"><b>' + data.logs.length + '</b><span class="hint">Activity logs</span></div>' +
+    '<div class="card"><b>' + esc(user.role) + '</b><span class="hint">Your role</span></div>';
+  if (user.role === 'Admin') {
+    document.getElementById('adminBlocks').innerHTML =
+      '<div class="form-card" style="margin-bottom:1rem" data-reveal><h2 style="font-size:1.3rem">Teachers</h2><div class="table-wrap"><table><thead><tr><th>ID</th><th>Name</th><th>Email</th><th>Registered</th></tr></thead><tbody>' +
+      (data.teachers.length ? data.teachers.map(function (t) {
+        return '<tr><td>' + t.teacher_id + '</td><td>' + esc(t.name) + '</td><td>' + esc(t.email) + '</td><td>' + day(t.created_at) + '</td></tr>';
+      }).join('') : '<tr><td colspan="4" style="text-align:center;color:var(--muted)">No teachers yet.</td></tr>') +
+      '</tbody></table></div></div>' +
+      '<div class="form-card" style="margin-bottom:1rem" data-reveal><h2 style="font-size:1.3rem">Students</h2><div class="table-wrap"><table><thead><tr><th>ID</th><th>Name</th><th>Email</th><th>Registered</th></tr></thead><tbody>' +
+      (data.students.length ? data.students.map(function (s) {
+        return '<tr><td>' + s.student_id + '</td><td>' + esc(s.name) + '</td><td>' + esc(s.email) + '</td><td>' + day(s.created_at) + '</td></tr>';
+      }).join('') : '<tr><td colspan="4" style="text-align:center;color:var(--muted)">No students yet.</td></tr>') +
+      '</tbody></table></div></div>';
+  }
+  document.getElementById('logsBody').innerHTML = data.logs.length
+    ? data.logs.map(function (l) {
+        return '<tr><td>' + l.log_id + '</td><td>' + esc(l.log_date) + '</td><td>' +
+          esc(SkillariumPortal.nameById(data.teachers, l.teacher_id, 'teacher_id')) + '</td><td>' +
+          esc(SkillariumPortal.nameById(data.students, l.student_id, 'student_id')) + '</td><td>' +
+          esc(l.status) + '</td></tr>';
+      }).join('')
+    : '<tr><td colspan="5" style="text-align:center;color:var(--muted)">No activity yet.</td></tr>';
+});
 </script>
-<script type="module">
-import { boot } from '/assets/app.js';
-boot('portal');
-</script>
+<script defer>document.addEventListener('DOMContentLoaded',function(){ if(window.Skillarium) Skillarium.boot('portal'); });</script>
 </body>
 </html>
