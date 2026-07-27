@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Contact — Skillarium</title>
+<meta name="description" content="Skillarium Academy of Technical Studies, Thrissur — coding, STEM and professional excellence.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/styles.css">
+</head>
+<body>
+<div id="loader"><div><div class="brand">Skillarium</div><div class="bar"><i></i></div></div></div>
+
+<section class="page-hero"><div class="wrap">
+  <div class="crumbs"><a href="/index.html">Home</a> / Contact</div>
+  <h1 class="fade-up d1">Say “Hi” to us</h1>
+  <p class="fade-up d2">Visit campus, call, or send a message — we are here every day.</p>
+</div></section>
+<section><div class="wrap form-shell">
+  <div class="form-card" data-reveal>
+    <p class="eyebrow">Message</p>
+    <h2 style="font-size:1.8rem">Contact form</h2>
+    <div class="alert" id="alert"></div>
+    <form id="cform">
+      <div class="row-2">
+        <div class="field"><label for="fn">First name</label><input id="fn" required></div>
+        <div class="field"><label for="ln">Last name</label><input id="ln"></div>
+      </div>
+      <div class="row-2">
+        <div class="field"><label for="em">Email</label><input id="em" type="email" required></div>
+        <div class="field"><label for="ph">Phone</label><input id="ph" type="tel" required></div>
+      </div>
+      <div class="field"><label for="msg">Message</label><textarea id="msg" required placeholder="How can we help?"></textarea></div>
+      <button class="btn btn-navy btn-block" type="submit">Send message</button>
+      <p class="hint" style="text-align:center;margin-top:.8rem">Or email info@skillarium.org</p>
+    </form>
+  </div>
+  <aside class="aside" data-reveal style="--d:.1s">
+    <h3>Visit our location</h3>
+    <p><strong>Address</strong><br>6th Floor, Crown Tower, Thrissur Sakthan stand,<br>Thrissur, Kerala, India - 680006</p>
+    <p style="margin-top:1rem"><strong>Call</strong><br><a href="tel:+919400138652">+91 94001 38652</a></p>
+    <p style="margin-top:1rem"><strong>Hours</strong><br>Monday to Sunday<br>6:00 am – 8:00 pm</p>
+    <p style="margin-top:1rem"><strong>Instagram</strong><br>@skillarium_academy</p>
+    <a class="btn btn-gold btn-block" style="margin-top:1.2rem" href="/portal/index.html">Go to Portal</a>
+  </aside>
+</div></section>
+<script type="module">
+import { alertBox } from '/assets/app.js';
+document.getElementById('cform').addEventListener('submit', (e)=>{
+  e.preventDefault();
+  alertBox(document.getElementById('alert'), 'ok', 'Thanks for contacting us! We will get back soon.');
+  e.target.reset();
+});
+</script>
+<script type="module">
+import { boot } from '/assets/app.js';
+boot('contact');
+</script>
+</body>
+</html>

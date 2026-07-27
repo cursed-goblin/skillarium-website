@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Portal Dashboard — Skillarium</title>
+<meta name="description" content="Skillarium Portal — teacher ESS, student registration and admin dashboard.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/styles.css">
+</head>
+<body>
+<div id="loader"><div><div class="brand">Skillarium</div><div class="bar"><i></i></div></div></div>
+
+<section class="page-hero"><div class="wrap">
+  <div class="crumbs"><a href="/index.html">Home</a> / Portal / Dashboard</div>
+  <div style="display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;align-items:end">
+    <div>
+      <h1 class="fade-up d1">Dashboard</h1>
+      <p class="fade-up d2" id="welcome">Loading session…</p>
+    </div>
+    <div class="fade-up d3" style="display:flex;gap:.5rem;flex-wrap:wrap">
+      <a class="btn btn-ghost" style="color:#fff;border-color:rgba(255,255,255,.3)" href="/portal/index.html">Register</a>
+      <button class="btn btn-gold" id="logout" type="button">Logout</button>
+    </div>
+  </div>
+</div></section>
+<section><div class="wrap">
+  <div class="dash-stats" id="stats" data-reveal></div>
+  <div id="adminBlocks"></div>
+  <div class="form-card" data-reveal>
+    <h2 style="font-size:1.4rem;margin:0 0 1rem">Activity logs</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>ID</th><th>Date</th><th>Teacher</th><th>Student</th><th>Status</th></tr></thead>
+        <tbody id="logsBody"></tbody>
+      </table>
+    </div>
+  </div>
+</div></section>
+<script type="module">
+import { requireAuth, logout, getDashboardData, nameById } from '/assets/portal.js';
+const user = requireAuth(['Admin','Teacher']);
+if (!user) throw new Error('auth');
+document.getElementById('welcome').textContent = `Welcome, ${user.name} (${user.role})`;
+document.getElementById('logout').onclick = logout;
+const data = getDashboardData();
+const esc = (v) => String(v ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const day = (d) => d ? new Date(d).toLocaleDateString('en-IN', {day:'numeric',month:'short',year:'numeric'}) : '—';
+document.getElementById('stats').innerHTML = `
+  <div class="card"><b>${data.teachers.length}</b><span class="hint">Teachers</span></div>
+  <div class="card"><b>${data.students.length}</b><span class="hint">Students</span></div>
+  <div class="card"><b>${data.logs.length}</b><span class="hint">Activity logs</span></div>
+  <div class="card"><b>${esc(user.role)}</b><span class="hint">Your role</span></div>`;
+if (user.role === 'Admin') {
+  document.getElementById('adminBlocks').innerHTML = `
+  <div class="form-card" style="margin-bottom:1rem" data-reveal>
+    <h2 style="font-size:1.3rem">Teachers</h2>
+    <div class="table-wrap"><table><thead><tr><th>ID</th><th>Name</th><th>Email</th><th>Registered</th></tr></thead>
+    <tbody>${data.teachers.length ? data.teachers.map(t=>`<tr><td>${t.teacher_id}</td><td>${esc(t.name)}</td><td>${esc(t.email)}</td><td>${day(t.created_at)}</td></tr>`).join('') : '<tr><td colspan=4 style="text-align:center;color:var(--muted)">No teachers yet.</td></tr>'}</tbody></table></div>
+  </div>
+  <div class="form-card" style="margin-bottom:1rem" data-reveal>
+    <h2 style="font-size:1.3rem">Students</h2>
+    <div class="table-wrap"><table><thead><tr><th>ID</th><th>Name</th><th>Email</th><th>Registered</th></tr></thead>
+    <tbody>${data.students.length ? data.students.map(s=>`<tr><td>${s.student_id}</td><td>${esc(s.name)}</td><td>${esc(s.email)}</td><td>${day(s.created_at)}</td></tr>`).join('') : '<tr><td colspan=4 style="text-align:center;color:var(--muted)">No students yet.</td></tr>'}</tbody></table></div>
+  </div>`;
+}
+document.getElementById('logsBody').innerHTML = data.logs.length
+  ? data.logs.map(l => `<tr><td>${l.log_id}</td><td>${esc(l.log_date)}</td><td>${esc(nameById(data.teachers,l.teacher_id,'teacher_id'))}</td><td>${esc(nameById(data.students,l.student_id,'student_id'))}</td><td>${esc(l.status)}</td></tr>`).join('')
+  : '<tr><td colspan=5 style="text-align:center;color:var(--muted)">No activity yet.</td></tr>';
+</script>
+<script type="module">
+import { boot } from '/assets/app.js';
+boot('portal');
+</script>
+</body>
+</html>

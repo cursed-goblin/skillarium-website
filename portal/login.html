@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Portal Login — Skillarium</title>
+<meta name="description" content="Skillarium Portal — teacher ESS, student registration and admin dashboard.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/styles.css">
+</head>
+<body>
+<div id="loader"><div><div class="brand">Skillarium</div><div class="bar"><i></i></div></div></div>
+
+<section class="page-hero"><div class="wrap">
+  <div class="crumbs"><a href="/index.html">Home</a> / Portal / Login</div>
+  <h1 class="fade-up d1">Portal login</h1>
+  <p class="fade-up d2">Teacher ESS or Admin access to the management dashboard.</p>
+</div></section>
+<section><div class="wrap" style="max-width:560px">
+  <div class="form-card" data-reveal>
+    <div class="tabs">
+      <a href="/portal/index.html">Register</a>
+      <a class="active" href="/portal/login.html">Login</a>
+      <a href="/portal/dashboard.html">Dashboard</a>
+    </div>
+    <p class="eyebrow">Secure access</p>
+    <h2 style="font-size:1.7rem;margin-bottom:.3rem">Sign in</h2>
+    <p class="hint" style="margin-bottom:1.2rem">Pick Teacher ESS or Admin below.</p>
+    <div class="alert" id="alert"></div>
+    <form id="loginForm">
+      <div class="field"><label for="email">Email</label><input id="email" type="email" required autocomplete="username"></div>
+      <div class="field"><label for="password">Password</label><input id="password" type="password" required autocomplete="current-password"></div>
+      <div class="field"><label>Portal</label>
+        <div class="roles">
+          <label><input type="radio" name="portal" value="teacher" checked> Teacher ESS</label>
+          <label><input type="radio" name="portal" value="admin"> Admin</label>
+        </div>
+      </div>
+      <button class="btn btn-navy btn-block" id="btn" type="submit">Login</button>
+    </form>
+    <div class="card" style="margin-top:1rem;background:#fff8e8;border-color:rgba(201,162,39,.35)">
+      <p style="margin:0;font-size:.9rem"><strong>Demo admin:</strong> admin@portal.local / admin123</p>
+    </div>
+  </div>
+</div></section>
+<script type="module">
+import { alertBox } from '/assets/app.js';
+import { login, getSession } from '/assets/portal.js';
+if (getSession()) location.href = './dashboard.html';
+document.getElementById('loginForm').addEventListener('submit', async (e)=>{
+  e.preventDefault();
+  const btn = document.getElementById('btn'); btn.disabled = true; btn.textContent = 'Signing in…';
+  try {
+    const portal = document.querySelector('input[name=portal]:checked')?.value || 'teacher';
+    await login({ email: email.value, password: password.value, portal });
+    location.href = './dashboard.html';
+  } catch (err) {
+    alertBox(alert, 'bad', err.message || 'Login failed');
+    btn.disabled = false; btn.textContent = 'Login';
+  }
+});
+</script>
+<script type="module">
+import { boot } from '/assets/app.js';
+boot('portal');
+</script>
+</body>
+</html>
