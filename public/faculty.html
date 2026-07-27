@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Faculty — Skillarium</title>
+<meta name="description" content="Meet the instructors at Skillarium Academy of Technical Studies, Thrissur.">
+<link rel="stylesheet" href="assets/styles.css">
+<script src="assets/config.js"></script>
+</head>
+<body>
+<main>
+<div class="page-head">
+  <div class="wrap">
+    <div class="crumb"><a href="index.html">Home</a> / Faculty</div>
+    <h1>Who teaches here</h1>
+    <p>Instructors who have built things in industry, not only taught them. Every batch is led by a named person you can meet before you enrol.</p>
+  </div>
+</div>
+
+<section>
+  <div class="wrap">
+    <div class="grid g3" id="grid"></div>
+  </div>
+</section>
+
+<section class="soft">
+  <div class="wrap narrow" style="text-align:center">
+    <h2>We are hiring instructors</h2>
+    <p class="sub" style="margin-bottom:24px">Full-time, part-time and visiting faculty across programming, AI, electronics and science. Industry professionals teaching one evening a week are very welcome.</p>
+    <a class="btn btn-primary" href="apply-teacher.html">Send your resume</a>
+  </div>
+</section>
+</main>
+
+<script type="module">
+import { chrome, getFaculty, esc, $ } from "./assets/app.js";
+chrome("faculty.html");
+const people = await getFaculty();
+const initials = n => n.split(/\s+/).filter(Boolean).slice(0,2).map(w=>w[0]).join("").toUpperCase();
+$("#grid").innerHTML = people.map(p => `
+  <div class="card">
+    ${p.photo_url
+      ? `<img src="${esc(p.photo_url)}" alt="${esc(p.name)}" style="width:64px;height:64px;border-radius:50%;object-fit:cover;margin-bottom:14px">`
+      : `<div style="width:64px;height:64px;border-radius:50%;background:var(--blue-soft);color:var(--blue-deep);display:grid;place-items:center;font-weight:700;font-size:20px;margin-bottom:14px" aria-hidden="true">${esc(initials(p.name))}</div>`}
+    <h3>${esc(p.name)}</h3>
+    <p style="color:var(--blue-deep);font-weight:600;font-size:14px;margin:0 0 10px">${esc(p.role || "")}</p>
+    <p>${esc(p.bio || "")}</p>
+    <div class="tag-row">${(p.subjects || []).map(s => `<span class="tag">${esc(s)}</span>`).join("")}</div>
+  </div>`).join("");
+</script>
+</body>
+</html>

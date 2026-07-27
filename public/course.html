@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Course — Skillarium</title>
+<link rel="stylesheet" href="assets/styles.css">
+<script src="assets/config.js"></script>
+</head>
+<body>
+<main>
+<div class="page-head">
+  <div class="wrap">
+    <div class="crumb"><a href="index.html">Home</a> / <a href="courses.html">Courses</a> / <span id="crumbNow">Course</span></div>
+    <h1 id="title">Loading…</h1>
+    <p id="tagline"></p>
+  </div>
+</div>
+
+<section>
+  <div class="wrap">
+    <div class="form-shell">
+      <div>
+        <div id="body"></div>
+        <h3 style="margin-top:36px">Upcoming batches</h3>
+        <div class="table-wrap" style="margin-top:14px">
+          <table>
+            <thead><tr><th>Batch</th><th>Starts</th><th>Schedule</th><th>Mode</th><th>Seats</th></tr></thead>
+            <tbody id="batches"></tbody>
+          </table>
+        </div>
+      </div>
+      <aside class="aside-card">
+        <h3>At a glance</h3>
+        <ul class="meta" style="flex-direction:column;gap:10px" id="facts"></ul>
+        <a class="btn btn-primary btn-block" id="applyBtn" href="apply-student.html">Apply for this course</a>
+        <p class="hint" style="margin-top:12px">Questions first? <a href="contact.html">Talk to us</a>.</p>
+      </aside>
+    </div>
+  </div>
+</section>
+</main>
+
+<script type="module">
+import { chrome, getCourses, getBatches, esc, money, day, $ } from "./assets/app.js";
+chrome("courses.html");
+
+const slug = new URLSearchParams(location.search).get("c");
+const courses = await getCourses();
+const c = courses.find(x => x.slug === slug) || courses[0];
+
+document.title = c.title + " — Skillarium";
+$("#crumbNow").textContent = c.title;
+$("#title").textContent = c.title;
+$("#tagline").textContent = c.tagline || "";
+$("#applyBtn").href = "apply-student.html?course=" + encodeURIComponent(c.slug);
+
+$("#body").innerHTML = `
+  <p style="font-size:17px;max-width:62ch">${esc(c.description || "")}</p>
+  <h3 style="margin-top:30px">What you walk away with</h3>
+  <ul class="check">${(c.outcomes || []).map(o => `<li>${esc(o)}</li>`).join("")}</ul>
+  ${c.syllabus_url ? `<a class="btn btn-ghost btn-sm" href="${esc(c.syllabus_url)}">Download syllabus (PDF)</a>` : ""}`;
+
+$("#facts").innerHTML = [
+  ["Level", c.level], ["Duration", c.duration], ["Mode", c.mode],
+  ["Fee", money(c.fee_amount)], ["Note", c.fee_note]
+].filter(([, v]) => v).map(([k, v]) => `<li style="justify-content:space-between"><span>${esc(k)}</span><b>${esc(v)}</b></li>`).join("");
+
+const tone = { open: "green", filling: "orange", closed: "red" };
+const rows = (await getBatches()).filter(b => (b.skl_courses?.slug || "") === c.slug);
+$("#batches").innerHTML = rows.length ? rows.map(b => `
+  <tr><td><b>${esc(b.name)}</b></td><td>${day(b.start_date)}</td><td>${esc(b.schedule || "—")}</td>
+  <td>${esc(b.mode || "—")}</td>
+  <td><span class="tag ${tone[b.status] || ""}">${b.seats_left ?? "?"} of ${b.seats_total ?? "?"} left</span></td></tr>`).join("")
+  : `<tr><td colspan="5" style="color:var(--muted)">No dated batch yet — apply and we will tell you the moment one opens.</td></tr>`;
+</script>
+</body>
+</html>
