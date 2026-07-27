@@ -33,9 +33,7 @@
   </div>
 </div></section>
 
-<script type="module">
-import { boot } from '/assets/app.js';
-boot('about');
-</script>
+<script src="/assets/app.js" defer></script>
+<script defer>document.addEventListener('DOMContentLoaded',function(){ if(window.Skillarium) Skillarium.boot('about'); });</script>
 </body>
 </html>

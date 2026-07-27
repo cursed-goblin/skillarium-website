@@ -1,29 +1,19 @@
-# Skillarium Website (Vercel-ready)
+# Skillarium Website
 
-Clean static rebuild inspired by [skillarium.org](https://www.skillarium.org/), plus an animated **Portal Management** module (register / login / dashboard).
+Static site for Render / Vercel / Netlify. Inspired by skillarium.org + portal management.
 
-## Deploy on Vercel
-1. Import `cursed-goblin/skillarium-website`
-2. Framework Preset: **Other**
-3. Root Directory: leave **empty** (site files are at repo root)
-4. Build Command: leave empty
-5. Output Directory: leave empty
-6. Deploy
+## Render (Static Site)
+- **Build Command:** leave empty
+- **Publish Directory:** `.`  (dot = repo root)
+- Do **not** use `public`
 
-If you previously set Root Directory to `public`, clear it — this rebuild lives at the repo root.
-
-## Pages
-- `/` Home
-- `/about` About
-- `/students` Students
-- `/admissions` Admissions
-- `/contact` Contact
-- `/portal` Register
-- `/portal/login` Login
-- `/portal/dashboard` Dashboard
+## Vercel
+- Root Directory: empty
+- Framework: Other
+- Build/Output: empty
 
 ## Portal demo admin
 - Email: `admin@portal.local`
 - Password: `admin123`
 
-Portal data is stored in the browser (localStorage) so it works on pure static hosting.
+Live example: https://skillarium-website.onrender.com

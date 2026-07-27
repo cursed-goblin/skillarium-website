@@ -46,17 +46,19 @@
     <a class="btn btn-gold btn-block" style="margin-top:1.2rem" href="/portal/index.html">Go to Portal</a>
   </aside>
 </div></section>
-<script type="module">
-import { alertBox } from '/assets/app.js';
-document.getElementById('cform').addEventListener('submit', (e)=>{
-  e.preventDefault();
-  alertBox(document.getElementById('alert'), 'ok', 'Thanks for contacting us! We will get back soon.');
-  e.target.reset();
+
+<script src="/assets/app.js" defer></script>
+<script defer>
+document.addEventListener('DOMContentLoaded', function () {
+  var form = document.getElementById('cform');
+  if (!form) return;
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    Skillarium.alertBox(document.getElementById('alert'), 'ok', 'Thanks for contacting us! We will get back soon.');
+    e.target.reset();
+  });
 });
 </script>
-<script type="module">
-import { boot } from '/assets/app.js';
-boot('contact');
-</script>
+<script defer>document.addEventListener('DOMContentLoaded',function(){ if(window.Skillarium) Skillarium.boot('contact'); });</script>
 </body>
 </html>
