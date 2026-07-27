@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Staff — Skillarium</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="stylesheet" href="assets/styles.css">
+<script src="assets/config.js"></script>
+</head>
+<body>
+<main>
+<div class="page-head">
+  <div class="wrap">
+    <div class="crumb"><a href="index.html">Home</a> / Staff</div>
+    <h1>Where the applications live</h1>
+    <p>Every application, enquiry and resume from this website lands in one Google Sheet and one Drive folder. There is no separate dashboard to log into and no password to lose — access is controlled by who you share the Sheet with.</p>
+  </div>
+</div>
+
+<section>
+  <div class="wrap">
+    <div class="grid g2">
+      <div class="card">
+        <h3>Applications sheet</h3>
+        <p>Students and teachers arrive on the <b>Applications</b> tab, newest at the bottom, each with a reference number. Enquiries from the contact form sit on <b>Leads</b>.</p>
+        <p><a class="btn btn-primary" id="sheetBtn" href="#" target="_blank" rel="noopener">Open the sheet <span class="arw">→</span></a></p>
+      </div>
+      <div class="card">
+        <h3>Resumes</h3>
+        <p>Every uploaded resume is saved to a private Drive folder named <b>Skillarium Resumes</b> and linked from the <code>resume_url</code> column of the row it belongs to.</p>
+        <p>Only people you explicitly share that folder with can open the files.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="soft">
+  <div class="wrap narrow">
+    <h2>Handling an application</h2>
+    <ol class="numlist" style="margin-top:28px;list-style:none;padding:0">
+      <li class="numrow">
+        <span class="n">01</span>
+        <h3>Read the row</h3>
+        <p>Open the Applications tab. The columns follow the form: contact details first, then the student or teacher specific answers, then their message and resume link.</p>
+      </li>
+      <li class="numrow">
+        <span class="n">02</span>
+        <h3>Change the status</h3>
+        <p>Edit the <code>status</code> cell to one of: <b>new</b>, <b>shortlisted</b>, <b>interview</b>, <b>accepted</b>, <b>rejected</b>, <b>withdrawn</b>. That is exactly what the applicant sees on the Check Status page.</p>
+      </li>
+      <li class="numrow">
+        <span class="n">03</span>
+        <h3>Tell them</h3>
+        <p>With the row selected, use the <b>Skillarium → Email applicant about current status</b> menu inside the Sheet. It sends a written update for that status and stamps the row as updated.</p>
+      </li>
+      <li class="numrow">
+        <span class="n">04</span>
+        <h3>Keep notes</h3>
+        <p>Use the <b>Notes</b> tab for anything said on a call. Put the reference number in the first column so the history stays searchable.</p>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>Editing what the website shows</h2>
+    <p class="lede">The site reads its content from the same sheet, so you do not need a developer to change a fee or add a batch.</p>
+    <div class="grid g3" style="margin-top:32px">
+      <div class="card"><h3>Courses</h3><p>The <b>Courses</b> tab drives the course catalogue. Set <code>is_published</code> to <code>yes</code> to show a course, and separate outcomes with a <code>|</code> character.</p></div>
+      <div class="card"><h3>Faculty</h3><p>The <b>Faculty</b> tab drives the faculty page. Add a photo URL and set <code>is_published</code> to <code>yes</code>. Placeholder rows should be replaced before launch.</p></div>
+      <div class="card"><h3>Batches</h3><p>The <b>Batches</b> tab drives the fees and batch dates page. Update <code>seats_left</code> as enrolments come in and set <code>status</code> to open, filling or closed.</p></div>
+    </div>
+    <div class="alert info" style="margin-top:28px;display:block">Changes appear on the website the next time a visitor loads the page. Nothing needs redeploying.</div>
+  </div>
+</section>
+</main>
+<script type="module">
+import { chrome, $ } from "./assets/app.js";
+chrome("admin.html");
+
+const url = (window.SKILLARIUM || {}).sheetUrl || "";
+const btn = $("#sheetBtn");
+if (url && !url.startsWith("REPLACE")) {
+  btn.href = url;
+} else {
+  btn.classList.add("btn-ghost");
+  btn.classList.remove("btn-primary");
+  btn.textContent = "Add sheetUrl in assets/config.js";
+  btn.removeAttribute("target");
+}
+</script>
+</body>
+</html>

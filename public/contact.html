@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Contact — Skillarium</title>
+<meta name="description" content="Visit or contact Skillarium Academy of Technical Studies, Crown Tower, Sakthan Thampuran Nagar, Thrissur, Kerala.">
+<link rel="stylesheet" href="assets/styles.css">
+<script src="assets/config.js"></script>
+</head>
+<body>
+<main>
+<div class="page-head">
+  <div class="wrap">
+    <div class="crumb"><a href="index.html">Home</a> / Contact</div>
+    <h1>Come and see the place</h1>
+    <p>Walk in during working hours, or send us a message and we will call you back.</p>
+  </div>
+</div>
+
+<section>
+  <div class="wrap">
+    <div class="form-shell">
+      <div>
+        <div class="alert" id="alert" role="status"></div>
+        <div class="form-card" id="formCard">
+          <h2 style="font-size:22px">Send an enquiry</h2>
+          <form id="form" novalidate style="margin-top:18px">
+            <div class="field half-row">
+              <div class="field"><label for="name">Name <span class="req">*</span></label>
+                <input id="name" type="text" required><div class="err"></div></div>
+              <div class="field"><label for="phone">Phone <span class="req">*</span></label>
+                <input id="phone" type="tel" required><div class="err"></div></div>
+            </div>
+            <div class="field"><label for="email">Email</label>
+              <input id="email" type="email"><div class="err"></div></div>
+            <div class="field"><label for="interest">What is this about?</label>
+              <select id="interest">
+                <option>Course enquiry</option><option>Fees and batches</option>
+                <option>Teaching opportunity</option><option>School or institutional partnership</option>
+                <option>Something else</option>
+              </select><div class="err"></div></div>
+            <div class="field"><label for="message">Message <span class="req">*</span></label>
+              <textarea id="message" required maxlength="2000"></textarea><div class="err"></div></div>
+            <input type="text" class="hp" id="company" tabindex="-1" autocomplete="off" aria-hidden="true">
+            <button class="btn btn-primary btn-block" id="submit" type="submit">Send enquiry</button>
+          </form>
+        </div>
+        <div class="form-card success" id="done" style="display:none">
+          <h2 style="font-size:24px">Thanks — message sent</h2>
+          <p class="sub">We usually reply the same working day.</p>
+          <a class="btn btn-ghost" href="courses.html" style="margin-top:14px">Browse courses</a>
+        </div>
+      </div>
+
+      <aside class="aside-card">
+        <h3>Campus</h3>
+        <p id="addr" style="margin-bottom:18px"></p>
+        <h3>Phone</h3>
+        <p style="margin-bottom:18px"><a id="tel" href="#"></a></p>
+        <h3>Email</h3>
+        <p style="margin-bottom:18px"><a id="mail" href="#"></a></p>
+        <h3>Hours</h3>
+        <p style="margin-bottom:18px">Monday to Saturday, 9:00 AM – 7:00 PM</p>
+        <a class="btn btn-primary btn-block btn-sm" id="waBtn" href="#">Message on WhatsApp</a>
+        <a class="btn btn-ghost btn-block btn-sm" id="mapBtn" href="#" style="margin-top:10px">Open in Maps</a>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<section class="soft tight">
+  <div class="wrap">
+    <div class="table-wrap" style="padding:0;overflow:hidden">
+      <iframe id="map" title="Map to Skillarium Academy" style="width:100%;height:340px;border:0;display:block" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+  </div>
+</section>
+</main>
+
+<script type="module">
+import { chrome, ACADEMY, submitLead, isLive, esc, $, validate, alertBox } from "./assets/app.js";
+chrome("contact.html");
+
+$("#addr").textContent = ACADEMY.address || "";
+$("#tel").textContent = ACADEMY.phone || "";
+$("#tel").href = "tel:" + (ACADEMY.phone || "").replace(/\s/g, "");
+$("#mail").textContent = ACADEMY.email || "";
+$("#mail").href = "mailto:" + (ACADEMY.email || "");
+$("#waBtn").href = "https://" + "wa.me/" + (ACADEMY.whatsapp || "");
+$("#wa
