@@ -55,21 +55,4 @@ import { chrome, getCourses, getBatches, esc, money, day, $ } from "./assets/app
 chrome("fees.html");
 
 const courses = await getCourses();
-$("#fees").innerHTML = courses.map(c => `
-  <tr>
-    <td><b>${esc(c.title)}</b><div style="color:var(--muted);font-size:13.5px">${esc(c.fee_note || "")}</div></td>
-    <td>${esc(c.duration || "—")}</td>
-    <td>${esc(c.mode || "—")}</td>
-    <td><b>${money(c.fee_amount)}</b></td>
-    <td><a class="btn btn-ghost btn-sm" href="apply-student.html?course=${esc(c.slug)}">Apply</a></td>
-  </tr>`).join("");
-
-const tone = { open: "green", filling: "orange", closed: "red" };
-const batches = await getBatches();
-$("#batches").innerHTML = batches.map(b => `
-  <tr>
-    <td><b>${esc(b.skl_courses?.title || "—")}</b></td>
-    <td>${esc(b.name)}</td>
-    <td>${day(b.start_date)}</td>
-    <td>${esc(b.schedule || "—")}</td>
-    <td><span class="tag ${tone[b.status] || ""}">${b.seats_left ?? "?"} of ${b.se
+$("#
