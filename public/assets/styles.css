@@ -250,45 +250,4 @@ header.site.scrolled .wrap { height: 64px; }
   background: var(--forest);
   transform: scaleX(0);
   transform-origin: right;
-  transition: transform 0.4s var(--ease);
-}
-.nav-links a:hover { color: var(--ink); }
-.nav-links a:hover::after, .nav-links a.active::after { transform: scaleX(1); transform-origin: left; }
-.nav-links a.active { color: var(--ink); }
-
-.nav-cta { display: flex; gap: 10px; align-items: center; }
-.nav-toggle { display: none; width: 44px; height: 44px; border: 1px solid var(--line); border-radius: 50%; background: transparent; cursor: pointer; }
-.nav-toggle span { display: block; width: 17px; height: 1.5px; background: var(--ink); margin: 4px auto; transition: transform 0.35s var(--ease), opacity 0.25s; }
-.nav-toggle.open span:nth-child(1) { transform: translateY(5.5px) rotate(45deg); }
-.nav-toggle.open span:nth-child(2) { opacity: 0; }
-.nav-toggle.open span:nth-child(3) { transform: translateY(-5.5px) rotate(-45deg); }
-
-/* scroll progress */
-.progress { position: fixed; top: 0; left: 0; height: 2px; background: var(--ochre); width: 0; z-index: 100; transition: width 0.1s linear; }
-
-/* ---------- hero ---------- */
-.hero { position: relative; background: var(--forest); color: #F5F2EA; overflow: hidden; }
-.hero::before {
-  content: "";
-  position: absolute; inset: 0;
-  background:
-    radial-gradient(120% 90% at 82% 10%, rgba(224, 139, 62, 0.22), transparent 58%),
-    radial-gradient(80% 70% at 0% 100%, rgba(27, 84, 66, 0.9), transparent 60%);
-  pointer-events: none;
-}
-.hero-inner { position: relative; padding: clamp(72px, 11vw, 148px) 0 0; }
-.hero h1 { color: #FCFAF5; max-width: 15ch; }
-.hero .lede { color: rgba(245, 242, 234, 0.78); max-width: 50ch; font-size: clamp(1.04rem, 1.35vw, 1.22rem); }
-.hero-actions { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 34px; }
-.hero-grid { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: clamp(32px, 5vw, 64px); align-items: end; }
-.hero-figure { position: relative; align-self: stretch; display: flex; align-items: flex-end; }
-
-/* headline mask reveal */
-.mask { display: block; overflow: hidden; }
-.mask > span {
-  display: block;
-  transform: translateY(105%);
-  animation: riseIn 1.05s var(--ease-out) forwards;
-  animation-delay: var(--d, 0s);
-}
-@keyframes riseIn { to { transform
+  transition: transform 0.4s var(--ease
