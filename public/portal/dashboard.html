@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Portal Dashboard — Skillarium</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="stylesheet" href="../assets/styles.css">
+<link rel="stylesheet" href="../assets/portal.css">
+<script src="../assets/config.js"></script>
+</head>
+<body class="portal-body">
+<main>
+  <div class="page-head portal-head">
+    <div class="wrap">
+      <div class="crumb"><a href="../index.html">Home</a> / <a href="./index.html">Portal</a> / Dashboard</div>
+      <div class="dash-top">
+        <div>
+          <h1>Portal dashboard</h1>
+          <p id="welcome">Loading session…</p>
+        </div>
+        <div class="dash-actions">
+          <a class="btn btn-ghost btn-sm" href="./index.html">Register</a>
+          <button class="btn btn-accent btn-sm" id="logout" type="button">Logout</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section class="sec tight">
+    <div class="wrap">
+      <div class="stats-row" id="stats" data-stagger="80"></div>
+      <div id="adminBlocks"></div>
+      <div class="portal-panel" data-reveal>
+        <div class="panel-head">
+          <h2>Activity logs</h2>
+          <span class="tag" id="logCount">0</span>
+        </div>
+        <div class="table-wrap">
+          <table class="portal-table">
+            <thead>
+              <tr><th>ID</th><th>Date</th><th>Teacher</th><th>Student</th><th>Status</th></tr>
+            </thead>
+            <tbody id="logsBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script type="module">
+import { chrome, $, esc, day } from "../assets/app.js";
+import { requireAuth, logout, getDashboardData, nameById } from "../assets/portal.js";
+chrome("portal/dashboard.html");
+
+const user = requireAuth(["Admin", "Teacher"]);
+if (!user) throw new Error("auth");
+
+$("#welcome").textContent = `Welcome, ${user.name} (${user.role})`;
+$("#logout").addEventListener("click", logout);
+
+const data = getDashboardData();
+const isAdmin = user.role === "Admin";
+
+$("#stats").innerHTML = `
+  <div class="stat-card"><b>${data.teachers.length}</b><span>Teachers</span></div>
+  <div class="stat-card"><b>${data.students.length}</b><span>Students</span></div>
+  <div class="stat-card"><b>${data.logs.length}</b><span>Activity logs</span></div>
+  <div class="stat-card"><b>${esc(user.role)}</b><span>Your role</span></div>
+`;
+
+if (isAdmin) {
+  $("#adminBlocks").innerHTML = `
+    <div class="portal-panel" data-reveal>
+      <div class="panel-head"><h2>Teachers</h2><span class="tag">${data.teachers.length}</span></div>
+      <div class="table-wrap">
+        <table class="portal-table">
+          <thead><tr><th>ID</th><th>Name</th><th>Email</th><th>Registered</th></tr></thead>
+          <tbody>
+            ${data.teachers.length ? data.teachers.map((t) => `
+              <tr>
+                <td>${t.teacher_id}</td>
+                <td>${esc(t.name)}</td>
+                <td>${esc(t.email)}</td>
+                <td>${day(t.created_at)}</td>
+              </tr>`).join("") : `<tr><td colspan="4" class="empty">No teachers registered.</td></tr>`}
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="portal-panel" data-reveal>
+      <div class="panel-head"><h2>Students</h2><span class="tag">${data.students.length}</span></div>
+      <div class="table-wrap">
+        <table class="portal-table">
+          <thead><tr><th>ID</th><th>Name</th><th>Email</th><th>Registered</th></tr></thead>
+          <tbody>
+            ${data.students.length ? data.students.map((s) => `
+              <tr>
+                <td>${s.student_id}</td>
+                <td>${esc(s.name)}</td>
+                <td>${esc(s.email)}</td>
+                <td>${day(s.created_at)}</td>
+              </tr>`).join("") : `<tr><td colspan="4" class="empty">No students registered.</td></tr>`}
+          </tbody>
+        </table>
+      </div>
+    </div>`;
+}
+
+$("#logCount").textContent = String(data.logs.length);
+$("#logsBody").innerHTML = data.logs.length
+  ? data.logs.map((log) => `
+      <tr>
+        <td>${log.log_id}</td>
+        <td>${esc(log.log_date)}</td>
+        <td>${esc(nameById(data.teachers, log.teacher_id, "teacher_id"))}</td>
+        <td>${esc(nameById(data.students, log.student_id, "student_id"))}</td>
+        <td><span class="tag green">${esc(log.status)}</span></td>
+      </tr>`).join("")
+  : `<tr><td colspan="5" class="empty">No activity logs.</td></tr>`;
+</script>
+</body>
+</html>

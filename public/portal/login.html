@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Portal Login — Skillarium</title>
+<meta name="description" content="Teacher ESS and Admin login for the Skillarium portal.">
+<link rel="stylesheet" href="../assets/styles.css">
+<link rel="stylesheet" href="../assets/portal.css">
+<script src="../assets/config.js"></script>
+</head>
+<body class="portal-body">
+<main>
+  <div class="page-head portal-head">
+    <div class="wrap narrow">
+      <div class="crumb"><a href="../index.html">Home</a> / <a href="./index.html">Portal</a> / Login</div>
+      <h1>Portal login</h1>
+      <p>Teacher ESS and Admin access to the management dashboard.</p>
+    </div>
+  </div>
+
+  <section class="sec tight">
+    <div class="wrap narrow">
+      <div class="alert" id="alert" role="status"></div>
+      <div class="form-card portal-card" data-reveal>
+        <div class="portal-tabs">
+          <a href="./index.html">Register</a>
+          <a class="active" href="./login.html">Login</a>
+          <a href="./dashboard.html">Dashboard</a>
+        </div>
+
+        <form id="form" class="portal-form" novalidate>
+          <div class="field">
+            <label for="email">Email address <span class="req">*</span></label>
+            <input id="email" name="email" type="email" required placeholder="Enter your email" autocomplete="username">
+            <div class="err"></div>
+          </div>
+
+          <div class="field">
+            <label for="password">Password <span class="req">*</span></label>
+            <input id="password" name="password" type="password" required placeholder="Enter your password" autocomplete="current-password">
+            <div class="err"></div>
+          </div>
+
+          <div class="field">
+            <label>Portal</label>
+            <div class="role-group">
+              <label class="radio-label"><input type="radio" name="portal" value="teacher" checked required> <span>Teacher ESS</span></label>
+              <label class="radio-label"><input type="radio" name="portal" value="admin" required> <span>Admin</span></label>
+            </div>
+          </div>
+
+          <button class="btn btn-primary btn-block" id="submit" type="submit">Login</button>
+        </form>
+
+        <div class="portal-hint">
+          <p><b>Demo admin:</b> <code>admin@portal.local</code> / <code>admin123</code></p>
+          <p>Teachers use the email and password from registration.</p>
+        </div>
+
+        <p class="hint" style="text-align:center;margin-top:18px">
+          New user? <a href="./index.html">Register here</a>
+        </p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script type="module">
+import { chrome, $, alertBox, validate } from "../assets/app.js";
+import { login, getSession } from "../assets/portal.js";
+chrome("portal/login.html");
+
+if (getSession()) location.href = "./dashboard.html";
+
+$("#form").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  if (!validate(e.target)) return;
+  const btn = $("#submit");
+  btn.disabled = true; btn.textContent = "Signing in…";
+  try {
+    const portal = document.querySelector('input[name="portal"]:checked')?.value || "teacher";
+    await login({
+      email: $("#email").value,
+      password: $("#password").value,
+      portal,
+    });
+    location.href = "./dashboard.html";
+  } catch (err) {
+    alertBox($("#alert"), "bad", err.message || "Login failed.");
+    btn.disabled = false; btn.textContent = "Login";
+  }
+});
+</script>
+</body>
+</html>

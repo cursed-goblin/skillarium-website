@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Portal Registration — Skillarium</title>
+<meta name="description" content="Register as a teacher or student on the Skillarium portal.">
+<link rel="stylesheet" href="../assets/styles.css">
+<link rel="stylesheet" href="../assets/portal.css">
+<script src="../assets/config.js"></script>
+</head>
+<body class="portal-body">
+<main>
+  <div class="page-head portal-head">
+    <div class="wrap narrow">
+      <div class="crumb"><a href="../index.html">Home</a> / <a href="./index.html">Portal</a> / Register</div>
+      <h1>Portal registration</h1>
+      <p>Teacher ESS and student accounts for the Skillarium management portal.</p>
+    </div>
+  </div>
+
+  <section class="sec tight">
+    <div class="wrap narrow">
+      <div class="alert" id="alert" role="status"></div>
+      <div class="form-card portal-card" data-reveal>
+        <div class="portal-tabs">
+          <a class="active" href="./index.html">Register</a>
+          <a href="./login.html">Login</a>
+          <a href="./dashboard.html">Dashboard</a>
+        </div>
+
+        <form id="form" class="portal-form" novalidate>
+          <div class="field">
+            <label for="name">Full name <span class="req">*</span></label>
+            <input id="name" name="name" type="text" required maxlength="100" placeholder="Enter your full name">
+            <div class="err"></div>
+          </div>
+
+          <div class="field">
+            <label for="email">Email address <span class="req">*</span></label>
+            <input id="email" name="email" type="email" required maxlength="100" placeholder="you@example.com">
+            <div class="err"></div>
+          </div>
+
+          <div class="field">
+            <label>System role <span class="req">*</span></label>
+            <div class="role-group">
+              <label class="radio-label"><input type="radio" name="role" value="Teacher" required> <span>Teacher</span></label>
+              <label class="radio-label"><input type="radio" name="role" value="Student" required> <span>Student</span></label>
+            </div>
+            <div class="err"></div>
+          </div>
+
+          <div class="field" id="password-group">
+            <label for="password">Password <small>(teachers only)</small></label>
+            <input id="password" name="password" type="password" maxlength="255" placeholder="Min 8 characters" autocomplete="new-password">
+            <div class="err"></div>
+          </div>
+
+          <button class="btn btn-primary btn-block" id="submit" type="submit">Register</button>
+        </form>
+
+        <p class="hint" style="text-align:center;margin-top:18px">
+          Already registered? <a href="./login.html">Login here</a>
+          · <a href="../apply-student.html">Full student application</a>
+        </p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script type="module">
+import { chrome, $, alertBox, validate } from "../assets/app.js";
+import { register } from "../assets/portal.js";
+chrome("portal/index.html");
+
+const pwGroup = $("#password-group");
+const pw = $("#password");
+
+function syncPassword() {
+  const role = document.querySelector('input[name="role"]:checked')?.value;
+  const teacher = role === "Teacher";
+  pw.required = teacher;
+  pwGroup.style.opacity = teacher ? "1" : ".55";
+}
+document.querySelectorAll('input[name="role"]').forEach((el) => el.addEventListener("change", syncPassword));
+syncPassword();
+
+$("#form").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  if (!validate(e.target)) return;
+  const btn = $("#submit");
+  btn.disabled = true; btn.textContent = "Registering…";
+  try {
+    const role = document.querySelector('input[name="role"]:checked')?.value;
+    await register({
+      name: $("#name").value,
+      email: $("#email").value,
+      role,
+      password: $("#password").value,
+    });
+    alertBox($("#alert"), "good", role + " registered successfully. You can log in now.");
+    e.target.reset();
+    syncPassword();
+  } catch (err) {
+    alertBox($("#alert"), "bad", err.message || "Registration failed.");
+  }
+  btn.disabled = false; btn.textContent = "Register";
+});
+</script>
+</body>
+</html>
