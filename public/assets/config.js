@@ -17,6 +17,4 @@ window.SKILLARIUM = {
     whatsapp: "910000000000",
     email: "info@skillarium.org",
     mapQuery: "Crown+Tower+Sakthan+Thampuran+Nagar+Thrissur",
-    blogUrl: "https://blog.skillarium.org"
-  }
-};
+    blogUrl
