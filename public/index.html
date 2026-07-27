@@ -3,245 +3,95 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Skillarium — Academy of Technical Studies, Thrissur</title>
-<meta name="description" content="A technical academy in Thrissur where every course ends in work you can show. Coding, AI and STEM, taught in English and Malayalam.">
-<link rel="stylesheet" href="./assets/styles.css">
-<script src="./assets/config.js"></script>
+<title>Skillarium Academy of Technical Studies | Thrissur, Kerala</title>
+<meta name="description" content="Skillarium Academy of Professional Studies - Your Path to Professional Excellence. Coding, STEM, and technical education in Thrissur.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles.css">
 </head>
 <body>
-<main>
 
-<!-- ================= HERO ================= -->
+<!-- Loader -->
+<div id="loader">
+  <div class="loader-text">SKILLARIUM</div>
+  <div class="loader-bar"></div>
+</div>
+
+<!-- Navbar -->
+<nav class="navbar">
+  <div class="wrap">
+    <a href="index.html" class="logo">Skillarium</a>
+    <div class="nav-links">
+      <a href="index.html" class="active">Home</a>
+      <a href="about.html">About</a>
+      <a href="students.html">Students</a>
+      <a href="admissions.html">Admissions</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <a href="admissions.html" class="nav-cta">Apply Now</a>
+    <div class="mobile-toggle"><span></span><span></span><span></span></div>
+  </div>
+</nav>
+
+<!-- Hero -->
 <section class="hero">
-  <div class="wrap hero-inner">
-    <div class="hero-grid">
-      <div>
-        <p class="eyebrow fade-up" style="--d:.1s">Thrissur, Kerala · Est. 2024</p>
-        <h1>
-          <span class="mask"><span style="--d:.15s">Learn by</span></span>
-          <span class="mask"><span style="--d:.27s">building. <em class="serif-it">Sixty</em></span></span>
-          <span class="mask"><span style="--d:.39s">times over.</span></span>
-        </h1>
-        <p class="lede fade-up" style="--d:.6s">Skillarium is a technical academy where every course ends in something you actually shipped — not a certificate you file away. Coding, AI and STEM, taught in English and Malayalam.</p>
-        <div class="hero-actions fade-up" style="--d:.72s">
-          <a class="btn btn-accent" href="apply-student.html">Apply as a student <span class="arw">→</span></a>
-          <a class="btn btn-ghost" href="apply-teacher.html">Teach with us</a>
-        </div>
-      </div>
-      <div class="hero-figure fade-up" style="--d:.5s">
-        <div style="width:100%">
-          <div class="tilegrid" id="heroArt" aria-hidden="true"></div>
-          <div class="tilecap"><span>60 projects</span><span>6 domains</span><span>2 languages</span></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="ticker" aria-hidden="true">
-      <div class="ticker-track" id="ticker"></div>
-    </div>
-
-    <div class="stats" style="border-top:0" data-stagger="110">
-      <div class="stat"><b><span data-count="60">60</span></b><span>Guided projects in the flagship track</span></div>
-      <div class="stat"><b><span data-count="6">6</span></b><span>Real-world domains covered</span></div>
-      <div class="stat"><b><span data-count="2">2</span></b><span>Languages of instruction</span></div>
-      <div class="stat"><b><span data-count="100" data-suffix="%">100%</span></b><span>Hands-on lab time</span></div>
-    </div>
-    <div style="height:clamp(40px,6vw,80px)"></div>
+  <div class="hero-particles">
+    <span style="width:4px;height:4px;top:20%;left:10%;animation-delay:0s"></span>
+    <span style="width:6px;height:6px;top:60%;left:80%;animation-delay:2s"></span>
+    <span style="width:3px;height:3px;top:40%;left:50%;animation-delay:4s"></span>
+    <span style="width:5px;height:5px;top:80%;left:30%;animation-delay:6s"></span>
+    <span style="width:4px;height:4px;top:30%;left:70%;animation-delay:8s"></span>
   </div>
-</section>
-
-<!-- ================= STATEMENT ================= -->
-<section class="sec">
   <div class="wrap">
-    <div class="half-row">
-      <div>
-        <p class="eyebrow" data-reveal>What we are</p>
-        <h2 data-reveal style="--d:.08s">A workshop that happens to award certificates.</h2>
-      </div>
-      <div data-reveal style="--d:.16s">
-        <p style="font-size:1.12rem;color:var(--ink-soft)">Most institutes in Kerala teach syllabus. We teach output. A student who finishes here leaves with a folder of working projects — a disease-detection model, a farm sensor, a website a real shop uses — and the vocabulary to explain how each one was built.</p>
-        <p style="color:var(--ink-soft)">That is the whole method. Sixty hours, sixty projects, six domains: medicine, agriculture, law, arts, sport and everyday life.</p>
-        <a class="link" href="about.html">How the academy works <span class="arw">→</span></a>
-      </div>
+    <div class="hero-badge" data-animate="fade-up" data-delay="1">
+      <span class="dot"></span>
+      <span>Academy of Technical Studies</span>
     </div>
+    <h1 data-animate="fade-up" data-delay="2">Skillarium</h1>
+    <p class="tagline" data-animate="fade-up" data-delay="3">Your Path to Professional Excellence</p>
+    <a href="about.html" class="hero-cta" data-animate="fade-up" data-delay="4">
+      Discover More
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
   </div>
 </section>
 
-<!-- ================= PROGRAMMES ================= -->
-<section class="sec soft">
+<!-- Commitment -->
+<section class="section section-white">
   <div class="wrap">
-    <div class="sec-head">
-      <p class="eyebrow" data-reveal>Programmes</p>
-      <h2 data-reveal style="--d:.06s">Courses built around <em class="serif-it">output</em>.</h2>
-      <p data-reveal style="--d:.12s">Every programme is scoped so you finish with work you can show — to a college, an employer or a client.</p>
-    </div>
-    <div class="grid g2" id="courseGrid" data-stagger="110"></div>
-    <div style="margin-top:34px" data-reveal>
-      <a class="btn btn-ghost" href="courses.html">See all courses and fees <span class="arw">→</span></a>
+    <div class="grid-2">
+      <div data-animate="fade-left">
+        <p class="section-label">Our Mission</p>
+        <h2 class="section-title">Our Commitment to Quality</h2>
+      </div>
+      <div data-animate="fade-right" data-delay="2">
+        <p class="section-desc">Skillarium offers an innovative curriculum and leverages the expertise of top-tier instructors to give a comprehensive and pertinent educational experience. Our educational programs are specifically developed to align with the rapid speed of technology changes, so ensuring that students obtain the most up-to-date skills and information.</p>
+        <a href="about.html" class="btn-link" style="margin-top: 24px; display: inline-flex; align-items: center; gap: 8px; font-weight: 600; color: var(--navy);">
+          Learn More
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- ================= METHOD ================= -->
-<section class="sec">
+<!-- Facilities -->
+<section class="section section-cream">
   <div class="wrap">
-    <div class="sec-head">
-      <p class="eyebrow" data-reveal>The method</p>
-      <h2 data-reveal style="--d:.06s">Four things we refuse to compromise on.</h2>
-    </div>
-    <div class="numlist" data-stagger="80">
-      <div class="numrow">
-        <span class="n">01</span>
-        <h3>Labs, not lectures</h3>
-        <p>Machines, boards, cameras and sensors on every desk. Class time is build time; theory is what you read before you arrive.</p>
+    <div class="grid-2">
+      <div data-animate="fade-left" data-delay="2">
+        <p class="section-label">Infrastructure</p>
+        <h2 class="section-title">Advanced Facilities and Resources</h2>
+        <p class="section-desc">Hands-on learning experiences that replicate real-world environments are provided by our state-of-the-art facilities and contemporary apparatus. We are committed to ensuring that our students are adequately equipped for their future professions by making ongoing investments in technology and resources.</p>
+        <a href="students.html" class="btn-link" style="margin-top: 24px; display: inline-flex; align-items: center; gap: 8px; font-weight: 600; color: var(--navy);">
+          Discover More
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
       </div>
-      <div class="numrow">
-        <span class="n">02</span>
-        <h3>Taught in the language you think in</h3>
-        <p>Concepts are explained in Malayalam wherever it helps. Nobody falls behind because the textbook was written for somebody else.</p>
-      </div>
-      <div class="numrow">
-        <span class="n">03</span>
-        <h3>Batches small enough to be noticed</h3>
-        <p>Seat counts are capped and published. Your instructor knows your project by name, not your roll number.</p>
-      </div>
-      <div class="numrow">
-        <span class="n">04</span>
-        <h3>Fees printed on the website</h3>
-        <p>Every rupee is listed on the fees page. No enquiry call required to find out what a course costs.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ================= IMPACT ================= -->
-<section class="sec dark">
-  <div class="wrap">
-    <div class="half-row" style="align-items:start">
-      <div>
-        <p class="eyebrow" data-reveal>By the numbers</p>
-        <h2 data-reveal style="--d:.06s">Small academy. Deliberately.</h2>
-        <p class="lede" data-reveal style="--d:.12s">We would rather run four batches properly than forty badly. These are the numbers we hold ourselves to each term.</p>
-      </div>
-      <div>
-        <div class="stats" style="grid-template-columns:repeat(2,1fr)" data-stagger="120">
-          <div class="stat"><b><span data-count="24">24</span></b><span>Maximum students in a batch</span></div>
-          <div class="stat"><b><span data-count="12">12</span></b><span>Weeks from first class to portfolio</span></div>
-          <div class="stat"><b><span data-count="2">2</span></b><span>Working days to answer an application</span></div>
-          <div class="stat"><b><span data-count="0" data-prefix="₹">₹0</span></b><span>Charged for the entrance conversation</span></div>
+      <div class="img-card" data-animate="fade-right" data-delay="3">
+        <div style="width: 100%; height: 400px; background: linear-gradient(135deg, var(--navy-light), var(--navy-soft)); border-radius: var(--r-lg); display: flex; align-items: center; justify-content: center; color: var(--gold); font-family: var(--serif); font-size: 1.5rem;" data-float>
+          <span>Modern Labs</span>
         </div>
       </div>
     </div>
-  </div>
-</section>
-
-<!-- ================= TWO PATHS ================= -->
-<section class="sec">
-  <div class="wrap">
-    <div class="sec-head">
-      <p class="eyebrow" data-reveal>Two ways in</p>
-      <h2 data-reveal style="--d:.06s">Come to study. Or come to teach.</h2>
-    </div>
-    <div class="grid g2" data-stagger="120">
-      <div class="card">
-        <span class="icon-box">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c3 2 9 2 12 0v-5"/></svg>
-        </span>
-        <h3>For students</h3>
-        <p>School students, degree students and career-changers. Choose a course, pick a batch, upload your marksheet or resume, and we take it from there.</p>
-        <div style="margin:22px 0 26px">
-          <div class="checkline"><span class="check">✓</span> Evening and weekend batches</div>
-          <div class="checkline"><span class="check">✓</span> Instalment-friendly fees</div>
-          <div class="checkline"><span class="check">✓</span> Instruction in English or Malayalam</div>
-        </div>
-        <a class="btn btn-primary" href="apply-student.html">Start your application <span class="arw">→</span></a>
-      </div>
-      <div class="card">
-        <span class="icon-box">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H4z"/><path d="M9 20h6M12 16v4"/></svg>
-        </span>
-        <h3>For teachers</h3>
-        <p>We hire instructors who have built things, not just taught them. Full-time, part-time and visiting faculty across programming, AI, electronics and science.</p>
-        <div style="margin:22px 0 26px">
-          <div class="checkline"><span class="check">✓</span> Flexible teaching hours</div>
-          <div class="checkline"><span class="check">✓</span> Curriculum already built — you teach, we handle the rest</div>
-          <div class="checkline"><span class="check">✓</span> Open to industry professionals moonlighting</div>
-        </div>
-        <a class="btn btn-dark" href="apply-teacher.html">Send your resume <span class="arw">→</span></a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ================= QUOTE ================= -->
-<section class="sec tight sand">
-  <div class="wrap">
-    <div class="half-row">
-      <div data-reveal="clip">
-        <span class="quote-mark">“</span>
-        <p class="quote">The certificate got me the interview. The projects got me the job.</p>
-      </div>
-      <div data-reveal style="--d:.15s">
-        <p style="color:var(--ink-soft)">Our students walk into interviews with a laptop full of working software and hardware. That is a very different conversation from walking in with a mark list.</p>
-        <p style="margin:0;font-size:.9rem;color:var(--muted)">— What we are building towards, in one line.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ================= APPLY STEPS ================= -->
-<section class="sec">
-  <div class="wrap">
-    <div class="sec-head">
-      <p class="eyebrow" data-reveal>Admissions</p>
-      <h2 data-reveal style="--d:.06s">Applying takes four minutes.</h2>
-      <p data-reveal style="--d:.12s">Same process whether you want to study here or teach here.</p>
-    </div>
-    <div class="steps" data-stagger="110">
-      <div class="step"><h4>Submit</h4><p>Fill the form, attach your resume or marksheet. No account needed.</p></div>
-      <div class="step"><h4>Get your reference</h4><p>You receive a reference number instantly, on screen and by email.</p></div>
-      <div class="step"><h4>We review</h4><p>Our team screens applications and calls you for a short conversation.</p></div>
-      <div class="step"><h4>Track it</h4><p>Check your status any time with your reference number — no chasing.</p></div>
-    </div>
-  </div>
-</section>
-
-<!-- ================= FAQ ================= -->
-<section class="sec soft">
-  <div class="wrap">
-    <div class="half-row" style="align-items:start">
-      <div>
-        <p class="eyebrow" data-reveal>Questions</p>
-        <h2 data-reveal style="--d:.06s">Asked often, answered plainly.</h2>
-        <p data-reveal style="--d:.12s;color:var(--ink-soft)">Still unsure? Message the office on WhatsApp — a human replies.</p>
-      </div>
-      <div class="acc" data-reveal style="--d:.1s">
-        <div class="acc-item">
-          <button class="acc-q" aria-expanded="false">Do I need a coding background? <span class="pm"></span></button>
-          <div class="acc-a"><div><p>No. The foundation courses assume nothing beyond basic computer use. We place you by conversation, not by test score.</p></div></div>
-        </div>
-        <div class="acc-item">
-          <button class="acc-q" aria-expanded="false">Can school students join? <span class="pm"></span></button>
-          <div class="acc-a"><div><p>Yes — the STEM &amp; Coding track is built for Class 6 to 12, on weekends and after school hours. A parent or guardian contact is required on the application.</p></div></div>
-        </div>
-        <div class="acc-item">
-          <button class="acc-q" aria-expanded="false">Are the fees payable in instalments? <span class="pm"></span></button>
-          <div class="acc-a"><div><p>Yes. Every course can be split across the term. The fees page lists the full amount and the instalment policy — nothing is hidden behind an enquiry call.</p></div></div>
-        </div>
-        <div class="acc-item">
-          <button class="acc-q" aria-expanded="false">What happens after I apply? <span class="pm"></span></button>
-          <div class="acc-a"><div><p>You get a reference number immediately. We review within two working days, then call you for a short conversation about level and batch fit. You can check the status any time on the Check Status page.</p></div></div>
-        </div>
-        <div class="acc-item">
-          <button class="acc-q" aria-expanded="false">I want to teach. What do you look for? <span class="pm"></span></button>
-          <div class="acc-a"><div><p>Evidence that you have built something — shipped software, working hardware, published research, or years in a lab or studio. Teaching experience helps but is not required; the curriculum is already written.</p></div></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ================= CTA ================= -->
-<section class="sec dark">
-  <div class="narrow center">
-    <p
+  </
