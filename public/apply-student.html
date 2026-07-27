@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Apply as a student — Skillarium</title>
+<meta name="description" content="Apply to a Skillarium course. Four minutes, no account needed. Attach your marksheet or resume.">
+<link rel="stylesheet" href="assets/styles.css">
+<script src="assets/config.js"></script>
+</head>
+<body>
+<main>
+<div class="page-head">
+  <div class="wrap">
+    <div class="crumb"><a href="index.html">Home</a> / Student application</div>
+    <h1>Apply as a student</h1>
+    <p>Four minutes. No account, no login. You get a reference number the moment you submit.</p>
+  </div>
+</div>
+
+<section>
+  <div class="wrap">
+    <div class="form-shell">
+      <div>
+        <div class="alert" id="alert" role="status"></div>
+
+        <div class="form-card" id="formCard">
+          <form id="form" novalidate>
+            <fieldset class="fieldset">
+              <legend>About you</legend>
+              <div class="field half-row">
+                <div class="field"><label for="full_name">Full name <span class="req">*</span></label>
+                  <input id="full_name" name="full_name" type="text" required autocomplete="name"><div class="err"></div></div>
+                <div class="field"><label for="city">City / town</label>
+                  <input id="city" name="city" type="text" autocomplete="address-level2"><div class="err"></div></div>
+              </div>
+              <div class="field half-row">
+                <div class="field"><label for="phone">Phone <span class="req">*</span></label>
+                  <input id="phone" name="phone" type="tel" required autocomplete="tel" placeholder="98470 00000"><div class="err"></div></div>
+                <div class="field"><label for="whatsapp">WhatsApp <span style="font-weight:400;color:var(--muted)">(if different)</span></label>
+                  <input id="whatsapp" name="whatsapp" type="tel"><div class="err"></div></div>
+              </div>
+              <div class="field"><label for="email">Email <span class="req">*</span></label>
+                <input id="email" name="email" type="email" required autocomplete="email"><div class="err"></div></div>
+            </fieldset>
+
+            <fieldset class="fieldset">
+              <legend>Education</legend>
+              <div class="field half-row">
+                <div class="field"><label for="qualification">Current class or qualification <span class="req">*</span></label>
+                  <select id="qualification" name="qualification" required>
+                    <option value="">Select…</option>
+                    <option>Class 6–8</option><option>Class 9–10</option><option>Class 11–12</option>
+                    <option>Diploma</option><option>Undergraduate</option><option>Postgraduate</option>
+                    <option>Working professional</option><option>Other</option>
+                  </select><div class="err"></div></div>
+                <div class="field"><label for="institution">School / college</label>
+                  <input id="institution" name="institution" type="text"><div class="err"></div></div>
+              </div>
+            </fieldset>
+
+            <fieldset class="fieldset">
+              <legend>Course</legend>
+              <div class="field"><label for="course_id">Which course? <span class="req">*</span></label>
+                <select id="course_id" name="course_id" required><option value="">Loading…</option></select><div class="err"></div></div>
+              <div class="field"><label for="batch_id">Preferred batch</label>
+                <select id="batch_id" name="batch_id"><option value="">Any / not sure yet</option></select><div class="err"></div></div>
+              <div class="field"><label for="preferred_mode">Preferred mode</label>
+                <select id="preferred_mode" name="preferred_mode">
+                  <option value="">No preference</option><option>Offline</option><option>Online</option><option>Hybrid</option>
+                </select><div class="err"></div></div>
+            </fieldset>
+
+            <fieldset class="fieldset" id="guardianSet">
+              <legend>Parent or guardian <span style="text-transform:none;letter-spacing:0;font-weight:400">(required under 18)</span></legend>
+              <div class="field half-row">
+                <div class="field"><label for="guardian_name">Guardian name</label>
+                  <input id="guardian_name" name="guardian_name" type="text"><div class="err"></div></div>
+                <div class="field"><label for="guardian_phone">Guardian phone</label>
+                  <input id="guardian_phone" name="guardian_phone" type="tel"><div class="err"></div></div>
+              </div>
+            </fieldset>
+
+            <fieldset class="fieldset">
+              <legend>Attachments</legend>
+              <div class="field">
+                <label for="resume">Resume or latest marksheet</label>
+                <div class="drop" id="drop" tabindex="0" role="button" aria-controls="resume">
+                  <strong>Choose a file or drag it here</strong>
+                  <span>PDF or Word · up to 5 MB</span>
+                </div>
+                <input id="resume" name="resume" type="file" accept=".pdf,.doc,.docx" class="sr">
+                <div class="err"></div>
+              </div>
+              <div class="field"><label for="message">Anything we should know?</label>
+                <textarea id="message" name="message" maxlength="2000" placeholder="Prior experience, timing constraints, questions…"></textarea><div class="err"></div></div>
+            </fieldset>
+
+            <div class="field">
+              <label class="checkline"><input type="checkbox" id="consent" required>
+                <span>I agree that Skillarium may contact me about this application by phone, WhatsApp or email. <span class="req">*</span></span></label>
+              <div class="err"></div>
+            </div>
+
+            <input type="text" class="hp" id="company" tabindex="-1" autocomplete="off" aria-hidden="true">
+            <button class="btn btn-primary btn-block" id="submit" type="submit">Submit application</button>
+            <p class="hint" style="text-align:center">We reply within two working days.</p>
+          </form>
+        </div>
+
+        <div class="form

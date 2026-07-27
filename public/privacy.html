@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Privacy — Skillarium</title>
+<link rel="stylesheet" href="assets/styles.css">
+<script src="assets/config.js"></script>
+</head>
+<body>
+<main>
+<div class="page-head">
+  <div class="wrap">
+    <div class="crumb"><a href="index.html">Home</a> / Privacy</div>
+    <h1>Privacy notice</h1>
+    <p>Plain-language summary of what we collect through this website and why. Have your lawyer review this before launch.</p>
+  </div>
+</div>
+<section>
+  <div class="wrap narrow">
+    <h3>What we collect</h3>
+    <p>Name, phone number, email, city, educational or professional details, and any resume or marksheet you upload through the application forms. Enquiry forms collect name, phone, email and your message.</p>
+    <h3>Why we collect it</h3>
+    <p>Solely to assess your application, contact you about it, and administer enrolment or recruitment. We do not sell personal data or share it with third parties for marketing.</p>
+    <h3>Where it is stored</h3>
+    <p>In a private Google Sheet owned by Skillarium, with resume files in a private Google Drive folder. Neither is publicly accessible; only authorised Skillarium staff can open them.</p>
+    <h3>How long we keep it</h3>
+    <p>Student applications are retained for two years from submission. Faculty applications are retained for one year unless you ask us to keep them on file longer.</p>
+    <h3>Your rights</h3>
+    <p>Write to us to request a copy of your data, correct it, or have it deleted. Include your application reference number so we can identify the record.</p>
+    <h3>Cookies</h3>
+    <p>This site sets no advertising cookies. Any analytics used is limited to aggregate page-view measurement.</p>
+    <p class="hint" style="margin-top:32px">Last updated: <span id="d"></span></p>
+  </div>
+</section>
+</main>
+<script type="module">
+import { chrome, $ } from "./assets/app.js";
+chrome("privacy.html");
+$("#d").textContent = new Date().toLocaleDateString("en-IN", { day:"numeric", month:"long", year:"numeric" });
+</script>
+</body>
+</html>

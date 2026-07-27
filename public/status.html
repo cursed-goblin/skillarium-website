@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Check application status — Skillarium</title>
+<meta name="description" content="Track your Skillarium application with your reference number.">
+<link rel="stylesheet" href="assets/styles.css">
+<script src="assets/config.js"></script>
+</head>
+<body>
+<main>
+<div class="page-head">
+  <div class="wrap">
+    <div class="crumb"><a href="index.html">Home</a> / Check status</div>
+    <h1>Check your application</h1>
+    <p>Enter the reference number you received when you applied. No login needed.</p>
+  </div>
+</div>
+
+<section>
+  <div class="wrap narrow">
+    <div class="alert" id="alert" role="status"></div>
+    <div class="form-card">
+      <form id="form" novalidate>
+        <div class="field"><label for="ref">Reference number <span class="req">*</span></label>
+          <input id="ref" type="text" required placeholder="SKL-26-01041" style="font-family:Menlo,Consolas,monospace"><div class="err"></div></div>
+        <div class="field"><label for="last4">Last 4 digits of your phone <span class="req">*</span></label>
+          <input id="last4" type="text" required inputmode="numeric" maxlength="4" placeholder="0000"><div class="err"></div></div>
+        <button class="btn btn-primary btn-block" id="submit" type="submit">Check status</button>
+      </form>
+
+      <div id="result" style="display:none;margin-top:28px;border-top:1px solid var(--border);padding-top:24px">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:20px">
+          <div><div style="font-size:13px;color:var(--muted)">Reference</div>
+            <div style="font-family:Menlo,Consolas,monospace;font-size:19px;font-weight:700" id="rRef"></div></div>
+          <span class="tag" id="rTag"></span>
+        </div>
+        <ul class="meta" style="flex-direction:column;gap:10px;margin:0">
+          <li style="justify-content:space-between"><span>Applicant</span><b id="rName"></b></li>
+          <li style="justify-content:space-between"><span>Applied for</span><b id="rType"></b></li>
+          <li style="justify-content:space-between"><span>Submitted</span><b id="rDate"></b></li>
+          <li style="justify-content:space-between"><span>Last update</span><b id="rUpd"></b></li>
+        </ul>
+        <p class="hint" id="rNote" style="margin-top:18px"></p>
+      </div>
+    </div>
+
+    <p class="hint" style="text-align:center;margin-top:20px">Lost your reference number? <a href="contact.html">Contact the office</a> with the phone number you applied with.</p>
+  </div>
+</section>
+</main>
+
+<script type="module">
+import { chrome, checkStatus, isLive, esc, day, $, validate, alertBox } from "./assets/app.js";
+chrome("status.html");
+
+const NOTE = {
+  new: "Your application is in the queue. We review new applications within two working days.",
+  shortlisted: "You have been shortlisted. Expect a call from our team shortly.",
+  interview: "An interview or demo session is being scheduled. Watch your phone and email.",
+  accepted: "Congratulations — you are through. Our office will confirm fees, batch and start date.",
+  rejected: "We are not moving ahead with this application. You are welcome to apply again for a future batch.",
+  withdrawn: "This application was withdrawn."
+};
+const TONE = { new: "", shortlisted: "blue", interview: "orange", accepted: "green", rejected: "red", withdrawn: "" };
+
+const pre = new URLSearchParams(location.search).get("ref");
+if (pre) $("#ref").value = pre;
+
+$("#form").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  if (!validate(e.target)) return;
+  const btn = $("#submit");
+  btn.disabled = true; btn.textContent = "Checking…";
+  $("#alert").className = "alert";
+  $("#result").style.display = "none";
+
+  try {
+    if (!isLive()) throw new Error("The backend is not connected yet. Paste your Apps Script web app URL into assets/config.js.");
+    const res = await checkStatus($("#ref").value.trim(), $("#last4").value.trim());
+    const row = res.found ? res : null;
+    if (!row) {
+      alertBox($("#alert"), "bad", "No application matches that reference number and phone combination.");
+    } else {
+      $("#rRef").textContent = row.ref_no;
+      $("#rName").textContent = row.full_name;
+      $("#rType").textContent = row.type === "teacher" ? "Faculty position" : "Student enrolment";
+      $("#rDate").textContent = day(row.submitted_at);
+      $("#rUpd").textContent = day(row.updated_at);
+      const tag = $("#rTag");
+      tag.className = "tag " + (TONE[row.status] || "");
+      tag.textContent = row.status.charAt(0).toUpperCase() + row.status.slice(1);
+      $("#rNote").textContent = NOTE[row.status] || "";
+      $("#result").style.display = "block";
+    }
+  } catch (err) {
+    alertBox($("#alert"), "bad", err.message);
+  }
+  btn.disabled = false; btn.textContent = "Check status";
+});
+</script>
+</body>
+</html>
