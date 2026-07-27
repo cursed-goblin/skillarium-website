@@ -18,6 +18,9 @@ a{color:inherit;text-decoration:none}img{max-width:100%;display:block}button,inp
 #loader .bar{width:120px;height:2px;background:rgba(255,255,255,.15);margin-top:18px;overflow:hidden;border-radius:2px}
 #loader .bar i{display:block;height:100%;width:0;background:var(--gold);animation:fill 1.2s ease forwards}
 @keyframes fill{to{width:100%}}
+/* auto-hide loader if JS fails (Render-safe) */
+@keyframes loaderAutoHide{0%,70%{opacity:1;visibility:visible}100%{opacity:0;visibility:hidden;pointer-events:none}}
+#loader{animation:loaderAutoHide 1.6s var(--ease) forwards}
 
 /* nav */
 .nav{position:fixed;inset:0 0 auto;z-index:50;transition:background .35s var(--ease),box-shadow .35s,padding .35s;padding:1.1rem 0}
