@@ -1,0 +1,92 @@
+/* css/style.css — Portal Management Styles */
+
+:root {
+    --primary: #10382B;
+    --primary-hover: #0A241C;
+    --bg: #F6F3EC;
+    --card: #ffffff;
+    --text: #14120F;
+    --border: #cbd5e1;
+    --radius: 8px;
+    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.container {
+    background: var(--card);
+    width: 100%;
+    max-width: 480px;
+    padding: 32px;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+}
+
+header { text-align: center; margin-bottom: 24px; }
+header h1 { font-size: 1.5rem; margin-bottom: 6px; }
+.subtitle { color: #64748b; font-size: 0.95rem; }
+
+.portal-form .form-group { margin-bottom: 18px; }
+.portal-form label { display: block; font-weight: 600; margin-bottom: 6px; font-size: 0.9rem; }
+.portal-form input[type="text"],
+.portal-form input[type="email"],
+.portal-form input[type="password"] {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    font-size: 1rem;
+}
+.portal-form input:focus { outline: none; border-color: var(--primary); }
+
+.role-group { display: flex; gap: 16px; }
+.radio-label {
+    display: flex; align-items: center; gap: 6px; cursor: pointer; font-weight: 500;
+    padding: 10px 14px; border: 1px solid var(--border); border-radius: var(--radius);
+    flex: 1; justify-content: center;
+}
+.radio-label input { accent-color: var(--primary); }
+
+.btn-submit {
+    width: 100%; padding: 12px; background: var(--primary); color: #fff; border: none;
+    border-radius: var(--radius); font-size: 1rem; font-weight: 600; cursor: pointer;
+}
+.btn-submit:hover { background: var(--primary-hover); }
+
+.auth-links { text-align: center; margin-top: 18px; }
+.btn-link { color: var(--primary); text-decoration: none; font-weight: 500; font-size: 0.9rem; }
+.btn-link:hover { text-decoration: underline; }
+
+table { width: 100%; border-collapse: collapse; margin-top: 16px; background: var(--card); border-radius: var(--radius); overflow: hidden; }
+th, td { padding: 12px; text-align: left; border-bottom: 1px solid var(--border); font-size: 0.9rem; }
+th { background: #f1f5f9; font-weight: 600; }
+tr:hover { background: #f8fafc; }
+
+.btn-danger {
+    background: #dc2626; color: #fff; padding: 8px 14px; border: none; border-radius: var(--radius);
+    cursor: pointer; text-decoration: none; font-size: 0.85rem;
+}
+.btn-danger:hover { background: #b91c1c; }
+
+.alert { padding: 12px; border-radius: var(--radius); margin-bottom: 16px; font-size: 0.9rem; }
+.alert-success { background: #dcfce7; color: #166534; border: 1px solid #bbf7d0; }
+.alert-error { background: #fee2e2; color: #991b1b; border: 1px solid #fecaca; }
+
+.dashboard-container { max-width: 960px; margin: 40px auto; }
+.dashboard-nav { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+.dashboard-nav h2 { font-size: 1.25rem; }
+.nav-links { display: flex; gap: 12px; }
+.nav-links a { color: var(--primary); text-decoration: none; font-size: 0.9rem; }
+.section-title { font-size: 1.1rem; margin: 24px 0 12px; color: #334155; }
+.login-container { max-width: 400px; }
