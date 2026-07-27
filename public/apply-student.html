@@ -108,4 +108,96 @@
           </form>
         </div>
 
-        <div class="form
+        <div class="form-card success" id="done" style="display:none">
+          <div style="width:56px;height:56px;border-radius:50%;background:var(--green-soft);display:grid;place-items:center;margin:0 auto 12px">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#46A171" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"/></svg>
+          </div>
+          <h2 style="font-size:26px">Application received</h2>
+          <p class="sub">Save this reference number. You will need it to check your status.</p>
+          <div class="ref" id="refNo">—</div>
+          <p class="hint">A confirmation has been sent to your email. Our team reviews applications within two working days.</p>
+          <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:18px">
+            <a class="btn btn-primary" id="statusLink" href="status.html">Check status</a>
+            <a class="btn btn-ghost" href="courses.html">Back to courses</a>
+          </div>
+        </div>
+      </div>
+
+      <aside class="aside-card">
+        <h3>What happens next</h3>
+        <ol style="padding-left:18px;margin:0 0 20px">
+          <li style="margin-bottom:8px">You get a reference number instantly.</li>
+          <li style="margin-bottom:8px">We screen the application within two working days.</li>
+          <li style="margin-bottom:8px">A short call to confirm level and batch fit.</li>
+          <li>Seat confirmation and fee details.</li>
+        </ol>
+        <h3>Need help applying?</h3>
+        <p style="margin-bottom:14px">Call us or send a WhatsApp message and we will fill it in with you.</p>
+        <a class="btn btn-ghost btn-block btn-sm" href="contact.html">Contact the office</a>
+      </aside>
+    </div>
+  </div>
+</section>
+</main>
+
+<script type="module">
+import { chrome, getCourses, getBatches, isLive, esc, $, $$, validate,
+         resumeField, uploadResume, submitApplication, alertBox } from "./assets/app.js";
+chrome("apply-student.html");
+
+const courses = await getCourses();
+const batches = await getBatches();
+const pre = new URLSearchParams(location.search).get("course");
+
+$("#course_id").innerHTML = `<option value="">Select a course…</option>` +
+  courses.map(c => `<option value="${esc(c.slug)}" data-slug="${esc(c.slug)}"${c.slug === pre ? " selected" : ""}>${esc(c.title)}</option>`).join("");
+
+function syncBatches() {
+  const opt = $("#course_id").selectedOptions[0];
+  const slug = opt?.dataset.slug;
+  const rows = batches.filter(b => (b.skl_courses?.slug || "") === slug);
+  $("#batch_id").innerHTML = `<option value="">Any / not sure yet</option>` +
+    rows.map(b => `<option value="${esc(b.name)}">${esc(b.name)} · ${esc(b.schedule || "")}</option>`).join("");
+}
+$("#course_id").addEventListener("change", syncBatches);
+syncBatches();
+
+const getResume = resumeField("drop", "resume");
+
+$("#form").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  if ($("#company").value) return;
+  if (!validate(e.target)) return;
+
+  const btn = $("#submit");
+  btn.disabled = true; btn.textContent = "Submitting…";
+
+  try {
+    if (!isLive()) throw new Error("The backend is not connected yet. Paste your Apps Script web app URL into assets/config.js.");
+    const resume = await uploadResume(getResume());
+    const v = id => ($("#" + id).value || "").trim() || null;
+    const courseOpt = $("#course_id").selectedOptions[0];
+    const course = courseOpt && courseOpt.value ? courseOpt.textContent.trim() : null;
+    const ref = await submitApplication({
+      type: "student",
+      full_name: v("full_name"), email: v("email"), phone: v("phone"),
+      whatsapp: v("whatsapp"), city: v("city"),
+      qualification: v("qualification"), institution: v("institution"),
+      course, batch: v("batch_id"), preferred_mode: v("preferred_mode"),
+      guardian_name: v("guardian_name"), guardian_phone: v("guardian_phone"),
+      message: v("message"), resume,
+      source: document.referrer ? "website:" + new URL(document.referrer).hostname : "website"
+    });
+    $("#formCard").style.display = "none";
+    $("#done").style.display = "block";
+    $("#refNo").textContent = ref;
+    $("#statusLink").href = "status.html?ref=" + encodeURIComponent(ref);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  } catch (err) {
+    alertBox($("#alert"), "bad", err.message || "Something went wrong. Please try again or call the office.");
+    btn.disabled = false; btn.textContent = "Submit application";
+  }
+});
+</script>
+</body>
+</html>
