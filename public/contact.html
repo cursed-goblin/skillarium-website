@@ -24,8 +24,10 @@
       <div>
         <div class="alert" id="alert" role="status"></div>
         <div class="form-card" id="formCard">
-          <h2 style="font-size:22px">Send an enquiry</h2>
-          <form id="form" novalidate style="margin-top:18px">
+          <p class="eyebrow" style="margin-bottom:10px">Enquiry</p>
+          <h2 style="font-size:clamp(1.5rem,2.5vw,1.9rem);margin-bottom:6px">Send a message</h2>
+          <p class="hint" style="margin:0 0 18px">We usually reply the same working day — phone, WhatsApp or email.</p>
+          <form id="form" novalidate>
             <div class="field half-row">
               <div class="field"><label for="name">Name <span class="req">*</span></label>
                 <input id="name" type="text" required><div class="err"></div></div>
@@ -61,7 +63,7 @@
         <h3>Email</h3>
         <p style="margin-bottom:18px"><a id="mail" href="#"></a></p>
         <h3>Hours</h3>
-        <p style="margin-bottom:18px">Monday to Saturday, 9:00 AM – 7:00 PM</p>
+        <p id="hours" style="margin-bottom:18px">Monday to Sunday · 6:00 AM – 8:00 PM</p>
         <a class="btn btn-primary btn-block btn-sm" id="waBtn" href="#">Message on WhatsApp</a>
         <a class="btn btn-ghost btn-block btn-sm" id="mapBtn" href="#" style="margin-top:10px">Open in Maps</a>
       </aside>
@@ -87,5 +89,34 @@ $("#tel").textContent = ACADEMY.phone || "";
 $("#tel").href = "tel:" + (ACADEMY.phone || "").replace(/\s/g, "");
 $("#mail").textContent = ACADEMY.email || "";
 $("#mail").href = "mailto:" + (ACADEMY.email || "");
+if ($("#hours") && ACADEMY.hours) $("#hours").textContent = ACADEMY.hours;
 $("#waBtn").href = "https://" + "wa.me/" + (ACADEMY.whatsapp || "");
-$("#wa
+$("#waBtn").target = "_blank";
+const q = encodeURIComponent(ACADEMY.mapQuery || ACADEMY.address || "Thrissur");
+$("#mapBtn").href = "https://" + "www.google.com/maps/search/?api=1&query=" + q;
+$("#mapBtn").target = "_blank";
+$("#map").src = "https://" + "maps.google.com/maps?q=" + q + "&output=embed";
+
+$("#form").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  if ($("#company").value) return;
+  if (!validate(e.target)) return;
+  const btn = $("#submit");
+  btn.disabled = true; btn.textContent = "Sending…";
+  try {
+    if (!isLive()) throw new Error("The backend is not connected yet. Paste your Apps Script web app URL into assets/config.js.");
+    const v = id => ($("#" + id).value || "").trim() || null;
+    await submitLead({
+      name: v("name"), phone: v("phone"), email: v("email"),
+      interest: v("interest"), message: v("message"), source: "contact-form"
+    });
+    $("#formCard").style.display = "none";
+    $("#done").style.display = "block";
+  } catch (err) {
+    alertBox($("#alert"), "bad", err.message);
+    btn.disabled = false; btn.textContent = "Send enquiry";
+  }
+});
+</script>
+</body>
+</html>

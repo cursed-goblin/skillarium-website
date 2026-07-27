@@ -22,6 +22,9 @@
   <div class="wrap narrow">
     <div class="alert" id="alert" role="status"></div>
     <div class="form-card">
+      <p class="eyebrow" style="margin-bottom:10px">Status check</p>
+      <h2 style="font-size:clamp(1.5rem,2.5vw,1.9rem);margin-bottom:6px">Track your application</h2>
+      <p class="hint" style="margin:0 0 22px">Use the reference number from your confirmation email. No login needed.</p>
       <form id="form" novalidate>
         <div class="field"><label for="ref">Reference number <span class="req">*</span></label>
           <input id="ref" type="text" required placeholder="SKL-26-01041" style="font-family:Menlo,Consolas,monospace"><div class="err"></div></div>
@@ -30,7 +33,7 @@
         <button class="btn btn-primary btn-block" id="submit" type="submit">Check status</button>
       </form>
 
-      <div id="result" style="display:none;margin-top:28px;border-top:1px solid var(--border);padding-top:24px">
+      <div id="result" style="display:none;margin-top:28px;border-top:1px solid var(--line);padding-top:24px">
         <div style="display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:20px">
           <div><div style="font-size:13px;color:var(--muted)">Reference</div>
             <div style="font-family:Menlo,Consolas,monospace;font-size:19px;font-weight:700" id="rRef"></div></div>
